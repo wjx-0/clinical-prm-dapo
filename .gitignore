@@ -1,0 +1,26 @@
+.DS_Store
+.env
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.log
+
+# Local datasets and large generated artifacts.
+data/raw/*
+data/processed/*
+data/sft/*
+data/prm/*
+data/rl/*
+!data/**/.gitkeep
+!data/**/README.md
+
+outputs/*
+!outputs/**/.gitkeep
+
+# Keep run notes/configs, ignore bulky generated run artifacts.
+runs/*/train.log
+runs/*/predictions.jsonl
+runs/*/error_cases.jsonl
+runs/*/metrics.json
+

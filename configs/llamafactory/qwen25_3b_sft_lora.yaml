@@ -1,0 +1,4 @@
+# TODO: Fill with the LLaMA-Factory SFT LoRA config.
+# Run with:
+#   llamafactory-cli train configs/llamafactory/qwen25_3b_sft_lora.yaml
+
