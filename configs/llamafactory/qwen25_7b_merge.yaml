@@ -1,2 +1,16 @@
-# TODO: Fill with the adapter merge/export config.
+### Merge the trained Qwen2.5-7B SFT LoRA adapter into a standalone model.
+### Run:
+###   llamafactory-cli export configs/llamafactory/qwen25_7b_merge.yaml
 
+### model
+model_name_or_path: Qwen/Qwen2.5-7B-Instruct
+adapter_name_or_path: saves/qwen25-7b/lora/sft-v2_11k-clean10k
+template: qwen
+finetuning_type: lora
+trust_remote_code: true
+
+### export
+export_dir: saves/qwen25-7b/merged/sft-v2_11k-clean10k
+export_size: 5
+export_device: cpu
+export_legacy_format: false

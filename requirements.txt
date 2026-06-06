@@ -1,4 +1,4 @@
-datasets
+datasets>=2.16.0,<=4.0.0
 jsonlines
 numpy
 pandas
