@@ -18,9 +18,14 @@ data/rl/*
 outputs/*
 !outputs/**/.gitkeep
 
+# LLaMA-Factory / LoRA training artifacts.
+saves/*
+logs/*
+wandb/
+checkpoint-*/
+
 # Keep run notes/configs, ignore bulky generated run artifacts.
 runs/*/train.log
 runs/*/predictions.jsonl
 runs/*/error_cases.jsonl
 runs/*/metrics.json
-
