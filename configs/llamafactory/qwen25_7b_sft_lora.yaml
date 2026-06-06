@@ -35,7 +35,9 @@ val_size: 0.02
 
 ### output
 output_dir: saves/qwen25-7b/lora/sft-v2_11k-clean10k
-logging_steps: 10
+logging_steps: 5
+logging_first_step: true
+disable_tqdm: false
 save_steps: 250
 plot_loss: true
 overwrite_output_dir: false

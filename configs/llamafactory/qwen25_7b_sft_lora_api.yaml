@@ -5,4 +5,3 @@ finetuning_type: lora
 template: qwen
 infer_backend: huggingface
 trust_remote_code: true
-bf16: true

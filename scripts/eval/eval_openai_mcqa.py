@@ -50,6 +50,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--max-tokens", type=int, default=768)
     parser.add_argument("--timeout", type=float, default=120.0)
     parser.add_argument("--retries", type=int, default=2)
+    parser.add_argument("--progress-every", type=int, default=10)
     return parser.parse_args()
 
 
@@ -257,12 +258,27 @@ def main() -> None:
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
     results: list[dict[str, Any]] = []
+    total = len(all_rows)
+    start_time = time.time()
+    print(f"Evaluating {total} examples with {args.workers} workers...", flush=True)
     with futures.ThreadPoolExecutor(max_workers=args.workers) as executor:
         future_to_index = {executor.submit(evaluate_one, row, args): i for i, row in enumerate(all_rows)}
         ordered: dict[int, dict[str, Any]] = {}
+        completed = 0
+        errors = 0
         for future in futures.as_completed(future_to_index):
             index = future_to_index[future]
-            ordered[index] = future.result()
+            result = future.result()
+            ordered[index] = result
+            completed += 1
+            errors += int(bool(result.get("error")))
+            if args.progress_every > 0 and (completed % args.progress_every == 0 or completed == total):
+                elapsed = time.time() - start_time
+                print(
+                    f"Progress: {completed}/{total} "
+                    f"({pct(completed, total)}%) elapsed={elapsed:.1f}s errors={errors}",
+                    flush=True,
+                )
         results = [ordered[i] for i in range(len(all_rows))]
 
     with args.output.open("w", encoding="utf-8") as f:

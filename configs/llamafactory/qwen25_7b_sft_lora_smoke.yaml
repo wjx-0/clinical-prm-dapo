@@ -34,6 +34,8 @@ val_size: 0.05
 ### output
 output_dir: outputs/sft/qwen25-7b-lora-smoke-v2_11k-clean10k
 logging_steps: 1
+logging_first_step: true
+disable_tqdm: false
 save_steps: 20
 plot_loss: true
 overwrite_output_dir: true
