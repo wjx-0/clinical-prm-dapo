@@ -1,2 +1,62 @@
-# TODO: Fill with the LLaMA-Factory SFT LoRA config.
+# Qwen2.5-7B-Instruct LoRA/QLoRA SFT on the sealed v2_11k clean 10k dataset.
+# Run:
+#   bash scripts/train/run_sft_7b.sh
 
+### model
+model_name_or_path: Qwen/Qwen2.5-7B-Instruct
+trust_remote_code: true
+flash_attn: auto
+
+### method
+stage: sft
+do_train: true
+finetuning_type: lora
+lora_target: all
+lora_rank: 16
+lora_alpha: 32
+lora_dropout: 0.05
+
+### qlora
+# Memory-friendly default for a single GPU. Remove these two lines for full
+# precision LoRA if your hardware has enough memory.
+quantization_bit: 4
+quantization_method: bitsandbytes
+
+### dataset
+dataset_dir: data/sft/v2_11k
+dataset: medical_cot_sft_v2_11k_clean10k
+template: qwen
+cutoff_len: 4096
+max_samples: 10000
+overwrite_cache: true
+preprocessing_num_workers: 8
+packing: false
+val_size: 0.02
+
+### output
+output_dir: saves/qwen25-7b/lora/sft-v2_11k-clean10k
+logging_steps: 10
+save_steps: 250
+plot_loss: true
+overwrite_output_dir: false
+save_total_limit: 3
+save_only_model: false
+report_to: none
+
+### train
+per_device_train_batch_size: 1
+gradient_accumulation_steps: 16
+learning_rate: 1.0e-4
+num_train_epochs: 1.0
+lr_scheduler_type: cosine
+warmup_ratio: 0.03
+weight_decay: 0.01
+max_grad_norm: 1.0
+bf16: true
+gradient_checkpointing: true
+ddp_timeout: 180000000
+
+### eval
+per_device_eval_batch_size: 1
+eval_strategy: steps
+eval_steps: 250

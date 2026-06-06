@@ -1,0 +1,89 @@
+# External Strict Audit v2_eval300
+
+## Summary
+
+- raw rows: 300
+- rule clean rows: 297
+- judge pass rows: 290
+- external_strict_pass rows: 286
+- external_strict_pass A tier: 219 (76.57%)
+- external_ultra_strict_pass rows: 248
+- external_ultra_strict_pass A tier: 188 (75.81%)
+
+## Hard Flag Counts
+
+- `judge_warn`: 6
+- `judge_fail`: 4
+- `rule_fail`: 3
+- `ecg_given_without_text`: 2
+- `ct_taken_no_findings`: 2
+- `following_ecg_or_image`: 1
+- `below_features`: 1
+
+## Soft Flag Counts
+
+- `source_typo_or_noisy_answer`: 29
+- `answer_text_not_exact_string`: 14
+- `short_final_step`: 5
+
+## Hard-Flagged Rows
+
+| id | tier | source | hard flags | judge | answer_text | question preview |
+|---|---|---|---|---|---|---|
+| `medmcqa_train_000439` | A | medmcqa | judge_fail | FAIL | Heme | A 34-year-old female has a history of intermittent episodes of severe abdominal pain. She has had multiple abdominal surgeries and exploratory procedures with no abnormal findings. Her urine appears dark during an attack |
+| `medqa_train_008364` | A | medqa | judge_warn | WARN | Normal c-peptide levels | A 21-year-old nurse starts to feel ill during his evening shift. Earlier this evening, he started his shift in his normal state of health. Past medical history is significant for multiple admissions to the hospital under |
+| `medmcqa_train_152272` | B | medmcqa | judge_fail, following_ecg_or_image, ecg_given_without_text | FAIL | Observation | A 65-year-old man with diabetes, on an oral hypoglycemic, presents to the ER with a spos- related right shoulder injury. His hea rate was noted to be irregular and the following ECG was obtained. The best immediate thera |
+| `medmcqa_train_012054` | B | medmcqa | judge_warn | WARN | Polyaeritis nodosa | A 50-year-old drug abuser presents with fever and weight loss. Exam shows hypeension, nodular skin rash, and peripheral neuropathy. ESR is 100 mm/L, and RBC casts are seen on urinalysis. (SELECT 1 DIAGNOSIS) |
+| `medmcqa_train_018122` | A | medmcqa | rule_fail | PASS | Chlordiazepozide | A 46-year-old man presented to the casualty with acute onset of seeing lizards all all around him in the room. He has been violent towards members of his brother who tried to bring him to hospital. On history he has a lo |
+| `medmcqa_train_102324` | A | medmcqa | rule_fail | PASS | it is airflow limitation that is not fully reversible | A 57-year-old man presents to the clinic for assessment of shortness of breath on exertion. The symptoms started many months ago after a "cold" and seem to be getting worse. There is no associated cough or sputum product |
+| `medmcqa_train_032987` | B | medmcqa | below_features | PASS | Facio scapulo humeral dystrophy | A 9-year old boy with the below features presents with pain in left shoulder and neck, with a restricted range of motion. There is no history of trauma or any surgery. What is the likely diagnosis? |
+| `medmcqa_train_177801` | B | medmcqa | judge_fail, ecg_given_without_text | FAIL | Acute pericarditis | A 25-year old patient with a history of recent respiratory tract infection complains of severe chest pain at rest. The ECG of the patient is given. The most probable diagnosis of the patient is? |
+| `medmcqa_train_040096` | B | medmcqa | judge_warn | WARN | Polyaeritis nodosa | A 50-year-old drug abuser presents with fever and weight loss. Exam shows hypeension, nodular skin rash, and peripheral neuropathy. ESR is 100 mm/L, and RBC casts are seen on urinalysis. The most likely condition is |
+| `medmcqa_train_040770` | A | medmcqa | judge_warn | WARN | Impaired diastolic relaxation and filling | A 73-year-old man with history of hypertension and osteoarthritis is evaluated for gradually increasing dyspnea over the preceding 6 weeks. He takes metoprolol for hypertension and naproxen for the arthritis. He has occa |
+| `medmcqa_train_167584` | B | medmcqa | judge_fail | FAIL | febuxostat | A 40 year old female with history of myasthenia gravis on treatment with azathioprine presents with ahritis involving knee joint and serum uric acid is 12mg%. which of the following is best drug for lowering uricacid in  |
+| `medmcqa_train_078108` | B | medmcqa | judge_warn, ct_taken_no_findings | WARN | Tuberous sclerosis | A 12 year old boy presents with seizures to the casualty. On history taking, the mother reveals several previous episodes of hospitalization for seizures which were difficult to control with medication. CT scan was taken |
+| `medmcqa_train_117279` | A | medmcqa | rule_fail | PASS | Clostridium perfringens | A 65-year-old man with a long history of diabetes mellitus was hospitalized for treatment of an ulcer, which had been present on his left great toe for several months. Left sided below knee amputation was performed becau |
+| `medmcqa_train_119821` | B | medmcqa | judge_warn, ct_taken_no_findings | WARN | Tuberous sclerosis | A 12 year old boy presents with seizures to the casualty. On history taking,mother reveals several previous episodes of hospitalization for seizures which were difficult to control with medication. CT scan was taken.What |
+
+## Soft-Only Rows Removed By Ultra Strict
+
+| id | tier | source | soft flags | answer_text | question preview |
+|---|---|---|---|---|---|
+| `medmcqa_train_033260` | A | medmcqa | source_typo_or_noisy_answer | Azithromycin | A 66-year-old man presents with shoness of breath, myalgia, headache along with multiple episodes of fever with rigors. He went to the local doctor who treated him for the flu. However, his symptoms worsened, and by the  |
+| `medmcqa_train_072440` | B | medmcqa | source_typo_or_noisy_answer | Cardioversion | A 55-year-old man is presents with chest discomfo, fatigue, and palpitations. His blood pressure is 85/50 mm Hg and hea rate is 140 beats per minute. Which of the following is the best treatment for this patient? |
+| `medmcqa_train_100069` | A | medmcqa | short_final_step | Doxycycline | This 25-year-old male university student gave history of multiple tick bites when he was at a camp 45 days ago. Ever since, he has episodes of high grade fever accompanied by headache, myalgias, ahralgias, nausea, and oc |
+| `medmcqa_train_121107` | A | medmcqa | source_typo_or_noisy_answer | Ectopic pregnancy | A 31-year-old woman comes to the emergency depament because of abdominal pain and vaginal spotting. She states that the pain began 2 days ago and has been worsening since. The spotting occurred this morning. Her last men |
+| `medmcqa_train_010081` | A | medmcqa | source_typo_or_noisy_answer | Ciprofloxacin | A 75-year-old male patient is a known case of a pulmonary disease and is being treated with inhalational coicosteroids and daily theophylline.The patient was admitted to a hospital for urinary retention few days back and |
+| `medmcqa_train_015272` | A | medmcqa | source_typo_or_noisy_answer | IgA | A 24-year-old woman who had previously been uneventfully transfused,receives a blood transfusion during surgery and sholy thereafter develops itching, generalized uicaria, laryngeal edema, and dyspnea with wheezing respi |
+| `medmcqa_train_173680` | B | medmcqa | answer_text_not_exact_string | It has a segmented, double-stranded RNA genome | A 1 year old girl presents with a 2-day history of fever, vomiting, and watery, nonbloody diarrhea. On physical exam, she appears dehydrated. Which of the following best describes the most likely infecting organism? |
+| `medmcqa_train_123514` | A | medmcqa | source_typo_or_noisy_answer | Lungs | A 3-year-old girl is seen in the emergency depament with acute abdominal pain. She has a 5-day history of vomiting and abdominal distension. She has not passed stool during this time, and during the past day, has been vo |
+| `medmcqa_train_014781` | A | medmcqa | answer_text_not_exact_string | Despite the potential for fetal infection , she may opt out from the test | A 19-year-old G2P1 woman at 9 weeks' gestation presents to the obstetrics and gynaecology clinic for her second prenatal visit. She reports no complaints other than occasional nausea. She had her first child by spontaneo |
+| `medmcqa_train_121362` | A | medmcqa | source_typo_or_noisy_answer | Percutaneous drainage of the gallbladder | A 73-year-old woman with a long history of heavy smoking undergoes femoral aery-popliteal aery bypass for rest pain in her left leg. Because of serious underlying respiratory insufficiency, she continues to require venti |
+| `medqa_train_009393` | A | medqa | answer_text_not_exact_string | Pulmonary tuberculosis " | A 38-year-old man comes to the physician because of fever, malaise, productive cough, and left-sided chest pain for 2 weeks. During this time, he has woken up to a wet pillow in the morning on multiple occasions and has  |
+| `medmcqa_train_058773` | A | medmcqa | source_typo_or_noisy_answer | Serum calcium of 13.6 mg/dL | A 60-year-old man with a past history of smoking for 30 years (he stopped 3 years ago, prior to cardiac bypass surgery) is admitted with cough and mild hemoptysis. He is afebrile with no shoness on breath. Physical exam  |
+| `medmcqa_train_125858` | A | medmcqa | source_typo_or_noisy_answer, answer_text_not_exact_string | Oral prednisone and diphenhydramine: | A 4 year old male is brought to the emergency room with a recent onset of a rash, uicaria, and a fever of 101 degrees F. The mother also states that her son has been complaining that his "bones hu." Physical examination  |
+| `medmcqa_train_156450` | A | medmcqa | source_typo_or_noisy_answer | Spironolactone | A 30-year-old male, Rajinder presents to OPD your office with fatigue, muscle weakness and headache. His blood pressure is 170/120 mm Hg and his hea rate is 100/min. Laboratory evaluation reveals hypokalemia, metabolic a |
+| `medmcqa_train_166591` | A | medmcqa | source_typo_or_noisy_answer | Warfarin with INR goal of 2.5-3.5 for life | A 26-year-old woman comes to the emergency complaining of 2 day of worsening right leg pain and swelling. She drove in a car 8 hours back from a hiking trip 2 days ago and then noticed some pain in the leg. At first she  |
+| `medmcqa_train_153941` | A | medmcqa | source_typo_or_noisy_answer | Fallopian tube | A 31-year-old woman comes to the emergency depament because of abdominal pain and vaginal spotting. She states that the pain began 2 days ago and has been worsening since. The spotting occurred this morning. Her last men |
+| `medmcqa_train_039442` | B | medmcqa | source_typo_or_noisy_answer, answer_text_not_exact_string | Ahrocentesis and identification of positively birefringent rhomboid crystals | A 65-year-old male develops the sudden onset of severe knee pain. The knee is red, swollen, and tender. He has a history of diabetes mellitus and cardiomyopathy. An x-ray of the knee shows linear calcification. Definitiv |
+| `medmcqa_train_157487` | A | medmcqa | source_typo_or_noisy_answer, answer_text_not_exact_string | Sta magnesium sulfate | A 25 year old nulliparous woman at 35 weeks' gestation comes to the labor and delivery ward complaining of contractions, a headache, and flashes of light in front of her eyes. Her pregnancy has been uncomplicated except  |
+| `medmcqa_train_110224` | B | medmcqa | answer_text_not_exact_string | Send urine for culture and sensitivity and start in antibiotics immediately | 5 year old male child presents with complaints of fever and abdominal distension. On examination there are 6 - 8 pus Cells/hpf in urine. WBC count shows 78 % neutrophils. What is the best line of management? |
+| `medmcqa_train_122256` | A | medmcqa | source_typo_or_noisy_answer | Ibuprofen | A 72-year-old female is brought to the emergency room after the development of periorbital edema, a maculopapular rash on her chest, and a fever of 101degF (38.3degC). Laboratory examination reveals a blood urea of 77 mg |
+| `medmcqa_train_113356` | A | medmcqa | short_final_step | Serotonin receptors | A 28-year-old graduate student presents with complaints of headache. She has had multiple episodes of severe headache over the past three years. She describes the headache as a pounding pain behind her eyes and along the |
+| `medmcqa_train_068233` | A | medmcqa | source_typo_or_noisy_answer | Pelvic inflammatory disease (PID) | 21-year-old woman presents to the emergency depament complaining of pelvic pain, a yellow-green vaginal discharge, and fever, all of which have been worsening over the last 24 hours. She has no frequency or dysuria. She  |
+| `medmcqa_train_172319` | A | medmcqa | source_typo_or_noisy_answer | Intrauterine pregnancy | A 33-year-old woman presents to the emergency depament complaining of nausea and vomiting. She states that she has been having significant nausea that has been worsening over the past 2 weeks. Over the past 2 days, she h |
+| `medqa_train_008286` | A | medqa | answer_text_not_exact_string | Rupture of the communicating branches of the cerebral arteries | A 52-year-old woman is accompanied by her husband to the emergency department with a severe occipital headache that started suddenly an hour ago. She is drowsy but able to answer the physician’s questions. She describes  |
+| `medqa_train_002863` | A | medqa | answer_text_not_exact_string | Start fluconazole. | A 36-year-old woman presents with a whitish vaginal discharge over the last week. She also complains of itching and discomfort around her genitals. She says her symptoms are getting progressively worse. She has been chan |
+| `medmcqa_train_158757` | A | medmcqa | source_typo_or_noisy_answer | Elevated pulmonary capillary pressure | A 59-year-old woman with a 10-year history of type 2 diabetes mellitus is noted by her physician to have bilateral pitting edema of the ankles and feet. No erythema is noted. On questioning, the patient also repos shones |
+| `medmcqa_train_181661` | B | medmcqa | source_typo_or_noisy_answer, answer_text_not_exact_string | Pneunocystis carinii pneumonia | A 30-year old HIV positive patient presents with fever, dyspnoea and non-productive cough. Patient is cyanosed. His chest X-ray reveals bilateral, symmetrical interstitial infiltrates. Which of the following is the most  |
+| `medmcqa_train_063369` | B | medmcqa | source_typo_or_noisy_answer | Protein electrophoresis | A 67 year old elderly male presents with headache, recurrent infections and multiple punched out lytic lesions of X-ray skull and lumbago for last 1 months.The investigadon that will be help in establishing a diagnosis i |
+| `medqa_train_003768` | A | medqa | short_final_step | Pancreaticoduodenectomy | A 66-year-old man comes to the physician because of yellowish discoloration of his eyes and skin, abdominal discomfort, and generalized fatigue for the past 2 weeks. He has had dark urine and pale stools during this peri |
+| `medqa_train_002203` | A | medqa | answer_text_not_exact_string | Outpouching of the hypopharynx " | A 68-year-old man is brought to the emergency department because of fever, progressive weakness, and cough for the past five days. He experienced a similar episode 2 months ago, for which he was hospitalized for 10 days  |
+| `medmcqa_train_181411` | B | medmcqa | source_typo_or_noisy_answer | dopamine | patient is known case of CAD suddenly presents with chest pain, shoness of breath, and with blood pressure of 90/60mmhg o/e cold clammy skin is observed, with urine output of 25ml/hr.what is the drug of choice? |
+| `medmcqa_train_056805` | A | medmcqa | source_typo_or_noisy_answer | Osteomyelitis | A 48-year-old man with a history of diabetes presents to the emergency depament with a poorly healing right foot ulcer. The ulcer has been present for 1 month, and has never been treated. The patient denies fever or chil |
+| `medmcqa_train_012311` | A | medmcqa | answer_text_not_exact_string | Begin indomethacin. As the patient improves, reduce the dose to minimize gastrointestinal side effects. | A 40-year-old obese man presents with intense pain in his left first metatarsophalangeal (MTP) joint for the past few hours. He has no history of trauma, fever, chills, and no previous similar episode. He has no history  |
+| `medmcqa_train_179489` | A | medmcqa | source_typo_or_noisy_answer | Increased intracranial pressure | A 3 year old boy is brought to the emergency depament after the acute onset of headache, vomiting, nuchal rigidity, and impaired mental status. MRI reveals a posterior fossa tumor that fills the 4th ventricle. Surgery is |
+| `medmcqa_train_073891` | A | medmcqa | source_typo_or_noisy_answer | Alprazolam | A 21-year-old woman comes to the emergency depament with complaints of 'constricting pain in chest' and difficulty in breathing. The patient is sure that 'she is having a hea attack'. She has three similar episodes in th |
+| `medqa_train_000911` | A | medqa | answer_text_not_exact_string | Start her on erythropoietin. | A 45-year-old woman presents to the office with a complaint of generalized weakness that has been getting worse over the last few months. She says that she just does not have the energy for her daily activities. She gets |
+| `medmcqa_train_007913` | A | medmcqa | source_typo_or_noisy_answer | Spironolactone | A 30-year-old male, Rajinder presents to your office with fatigue, muscle weakness and headache. His blood pressure is 170/120 mm Hg and his hea rate is 100/min. Laboratory evaluation reveals hypokalemia, metabolic alkal |
+| `medmcqa_train_088936` | A | medmcqa | answer_text_not_exact_string | Spironolactone, a commonly used diuretic for treating ascites in the setting of cirrhosis, acts as a competitive aldosterone inhibitor at the level of the collecting duct of the nephron, resulting in decreased potassium excretion and hyperkalemia. | A 47-year-old HIV-positive man is brought to the emergency room because of weakness. The patient has HIV nephropathy and adrenal insufficiency. He takes trimethoprim-sulfamethoxazole for PCP prophylaxis and is on triple- |
