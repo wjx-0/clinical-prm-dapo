@@ -1,4 +1,4 @@
-# Qwen2.5-7B-Instruct LoRA/QLoRA SFT on the sealed v2_11k clean 10k dataset.
+# Qwen2.5-7B-Instruct LoRA/QLoRA SFT on the clean 12866 train-proportional topup dataset.
 # Run:
 #   bash scripts/train/run_sft_7b.sh
 
@@ -23,18 +23,18 @@ quantization_bit: 4
 quantization_method: bitsandbytes
 
 ### dataset
-dataset_dir: data/sft/v2_11k
-dataset: medical_cot_sft_v2_11k_clean10k
+dataset_dir: data/sft/v3_12866_train_prop_topup2866
+dataset: medical_cot_sft_v3_12866_train_prop_topup2866_clean12866
 template: qwen
 cutoff_len: 4096
-max_samples: 10000
+max_samples: 12866
 overwrite_cache: true
 preprocessing_num_workers: 8
 packing: false
 val_size: 0.02
 
 ### output
-output_dir: saves/qwen25-7b/lora/sft-v2_11k-clean10k
+output_dir: saves/qwen25-7b/lora/sft-v3_12866-train-prop-topup2866
 logging_steps: 5
 logging_first_step: true
 disable_tqdm: false

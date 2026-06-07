@@ -6,7 +6,7 @@ PROJECT_ROOT="$(cd "${SCRIPT_DIR}/../.." && pwd)"
 cd "${PROJECT_ROOT}"
 
 CONFIG_PATH="${1:-configs/llamafactory/qwen25_7b_sft_lora.yaml}"
-DATA_PATH="data/sft/v2_11k/medical_cot_sft_train.clean_10k_public.jsonl"
+DATA_PATH="data/sft/v3_12866_train_prop_topup2866/medical_cot_sft_train.clean_13k_public.jsonl"
 LOG_DIR="${LOG_DIR:-logs/train}"
 RUN_ID="${RUN_ID:-$(basename "${CONFIG_PATH}" .yaml)-$(date +%Y%m%d-%H%M%S)}"
 LOG_PATH="${LOG_PATH:-${LOG_DIR}/${RUN_ID}.log}"
