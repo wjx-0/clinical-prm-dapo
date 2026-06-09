@@ -4,7 +4,7 @@
 #   REWARD_PROFILE=orm_v1 bash scripts/train/run_grpo.sh
 #   PRM_ENABLED=0 bash scripts/train/run_grpo.sh
 
-active_profile: orm_v1
+active_profile: orm_v2
 
 profiles:
   orm_v1:
@@ -14,12 +14,26 @@ profiles:
     prm: 0.0
     consistency: 0.0
 
+  orm_v2:
+    answer: 1.0
+    format: 0.08
+    process: 0.05
+    consistency: 0.04
+    length: 0.02
+    prm: 0.0
+
   prm_v1:
     answer: 0.5
     prm: 0.2
     format: 0.15
     consistency: 0.1
     length: 0.05
+
+length:
+  min_chars: 80
+  target_chars: 160
+  soft_max_chars: 2200
+  max_chars: 4096
 
 prm:
   enabled: true

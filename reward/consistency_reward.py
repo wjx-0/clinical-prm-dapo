@@ -107,7 +107,7 @@ def score_consistency(response: str, extra_info: Any = None) -> float:
 
     think = think_content(text)
     if not think:
-        return 0.25
+        return 0.2
 
     mentions = explicit_answer_mentions(think)
     if mentions:
@@ -119,6 +119,6 @@ def score_consistency(response: str, extra_info: Any = None) -> float:
 
     support = answer_text_supported(think, final_answer_text(final_answer, extra_info))
     if support is False:
-        return 0.55
+        return 0.4
 
     return 1.0
