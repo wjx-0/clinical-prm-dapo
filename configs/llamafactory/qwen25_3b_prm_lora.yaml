@@ -1,2 +1,63 @@
-# TODO: Fill with the LLaMA-Factory PRM/reward-model config.
+# Qwen2.5-3B-Instruct LoRA reward-model training on PRM pairwise data.
+# Build data first with:
+#   python scripts/data/build_prm_data.py
+# Run:
+#   bash scripts/train/run_prm.sh
 
+### model
+model_name_or_path: Qwen/Qwen2.5-3B-Instruct
+trust_remote_code: true
+flash_attn: auto
+
+### method
+stage: rm
+do_train: true
+finetuning_type: lora
+lora_target: all
+lora_rank: 16
+lora_alpha: 32
+lora_dropout: 0.05
+
+### qlora
+quantization_bit: 4
+quantization_method: bitsandbytes
+
+### dataset
+dataset_dir: data/prm/v1_12866_process_rm
+dataset: medical_prm_v1_12866_pairwise_train
+eval_dataset: medical_prm_v1_12866_pairwise_val
+template: qwen
+cutoff_len: 4096
+overwrite_cache: true
+preprocessing_num_workers: 8
+packing: false
+
+### output
+output_dir: saves/qwen25-3b/lora/prm-v1_12866-process-rm
+logging_steps: 5
+logging_first_step: true
+disable_tqdm: false
+save_steps: 250
+plot_loss: true
+overwrite_output_dir: false
+save_total_limit: 3
+save_only_model: false
+report_to: none
+
+### train
+per_device_train_batch_size: 1
+gradient_accumulation_steps: 16
+learning_rate: 1.0e-4
+num_train_epochs: 1.0
+lr_scheduler_type: cosine
+warmup_ratio: 0.03
+weight_decay: 0.01
+max_grad_norm: 1.0
+bf16: true
+gradient_checkpointing: true
+ddp_timeout: 180000000
+
+### eval
+per_device_eval_batch_size: 1
+eval_strategy: steps
+eval_steps: 250

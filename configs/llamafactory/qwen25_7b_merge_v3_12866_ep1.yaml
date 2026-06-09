@@ -1,0 +1,16 @@
+### Merge the Qwen2.5-7B SFT v3 epoch1 LoRA adapter into a standalone model.
+### Run on the server:
+###   llamafactory-cli export configs/llamafactory/qwen25_7b_merge_v3_12866_ep1.yaml
+
+### model
+model_name_or_path: /root/rivermind-data/models/Qwen2.5-7B-Instruct
+adapter_name_or_path: saves/qwen25-7b/lora/sft-v3_12866-train-prop-topup2866
+template: qwen
+finetuning_type: lora
+trust_remote_code: true
+
+### export
+export_dir: saves/qwen25-7b/merged/sft-v3_12866-train-prop-topup2866-ep1
+export_size: 5
+export_device: cpu
+export_legacy_format: false

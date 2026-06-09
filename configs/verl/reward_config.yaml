@@ -1,2 +1,32 @@
-# TODO: Centralize reward weights and reward model paths here.
+# Reward profile used by reward/total_reward.py.
+#
+# Override at runtime with:
+#   REWARD_PROFILE=orm_v1 bash scripts/train/run_grpo.sh
+#   PRM_ENABLED=0 bash scripts/train/run_grpo.sh
 
+active_profile: orm_v1
+
+profiles:
+  orm_v1:
+    answer: 1.0
+    format: 0.1
+    length: 0.05
+    prm: 0.0
+    consistency: 0.0
+
+  prm_v1:
+    answer: 0.5
+    prm: 0.2
+    format: 0.15
+    consistency: 0.1
+    length: 0.05
+
+prm:
+  enabled: true
+  # Set after PRM/RM training, or export PRM_MODEL_PATH at runtime.
+  # Example: saves/qwen25-3b/lora/prm-v1_12866-process-rm
+  model_path: ""
+  use_model: false
+  fallback: rule
+  max_chars: 4096
+  max_model_length: 4096

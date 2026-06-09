@@ -65,13 +65,36 @@ RL 数据放在 `data/rl/` 下，用于 verl 的 GRPO/DAPO 阶段。此阶段只
 
 ## PRM 数据
 
-PRM 数据放在 `data/prm/` 下，可以先采用 pairwise 格式。
+PRM 数据放在 `data/prm/` 下，第一版采用 LLaMA-Factory reward-model
+训练可读的 pairwise/ranking Alpaca 格式。`chosen` 来自审核后的 clean
+SFT reasoning，`rejected` 来自同题真实 rejected 样本或基于原 reasoning
+构造的过程扰动负样本，并用 `negative_type` 记录负样本来源。
 
 ```json
 {
-  "id": "prm_pair_000001",
+  "id": "medqa_train_000001_prm_pair_01_truncated_reasoning",
   "question_id": "medqa_train_000001",
-  "chosen": "<think>较好的推理过程</think><answer>C</answer>",
-  "rejected": "<think>较差的推理过程</think><answer>B</answer>"
+  "instruction": "Please solve the following medical multiple-choice question...",
+  "input": "Question:\n...\n\nOptions:\nA. ...\nB. ...\nC. ...\nD. ...",
+  "chosen": "<think>\nStep 1: ...\n</think>\n<answer>C</answer>",
+  "rejected": "<think>\nStep 1: ...\n</think>\n<answer>C</answer>",
+  "answer": "C",
+  "answer_text": "选项 C 文本",
+  "negative_type": "truncated_reasoning"
 }
+```
+
+默认构造命令：
+
+```bash
+python scripts/data/build_prm_data.py
+```
+
+默认输出：
+
+```text
+data/prm/v1_12866_process_rm/prm_pairwise_train.jsonl
+data/prm/v1_12866_process_rm/prm_pairwise_val.jsonl
+data/prm/v1_12866_process_rm/dataset_info.json
+docs/data_stats_prm_v1_12866.md
 ```
