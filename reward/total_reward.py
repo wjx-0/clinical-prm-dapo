@@ -7,14 +7,14 @@ from typing import Any
 try:
     from reward.answer_reward import score_answer
     from reward.consistency_reward import score_consistency
-    from reward.format_reward import score_format
+    from reward.format_reward import FULL_FORMAT_RE, score_format
     from reward.length_reward import score_length
     from reward.process_reward import score_process
     from reward.prm_reward import load_reward_config, score_prm
 except ImportError:
     from answer_reward import score_answer
     from consistency_reward import score_consistency
-    from format_reward import score_format
+    from format_reward import FULL_FORMAT_RE, score_format
     from length_reward import score_length
     from process_reward import score_process
     from prm_reward import load_reward_config, score_prm
@@ -99,4 +99,7 @@ def compute_score(data_source, solution_str, ground_truth, extra_info=None):
         )
     if weights.get("consistency", 0.0):
         components["consistency"] = score_consistency(solution_str, extra_info=extra_info)
-    return sum(weights.get(name, 0.0) * components[name] for name in components)
+    total = sum(weights.get(name, 0.0) * components[name] for name in components)
+    if not FULL_FORMAT_RE.match(str(solution_str)):
+        total = min(total, 0.3)
+    return total

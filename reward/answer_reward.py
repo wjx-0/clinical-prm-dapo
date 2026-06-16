@@ -46,7 +46,7 @@ def extract_answer_letter(response: str, *, loose: bool = True) -> str:
     return standalone[-1].upper() if standalone else ""
 
 
-def score_answer(prediction: str, gold: Any, *, loose: bool = True) -> float:
+def score_answer(prediction: str, gold: Any, *, loose: bool = False) -> float:
     pred = extract_answer_letter(prediction, loose=loose)
     gold_label = normalize_gold(gold)
     return 1.0 if pred and gold_label and pred == gold_label else 0.0

@@ -62,6 +62,23 @@ STOPWORDS = {
     "with",
 }
 
+EXCLUSION_MARKERS = (
+    "rules out",
+    "ruled out",
+    "less likely",
+    "unlikely",
+    "not consistent",
+    "does not",
+    "cannot",
+    "would not",
+    "incorrect because",
+    "wrong because",
+    "exclude",
+    "against",
+)
+
+SENTENCE_SPLIT_RE = re.compile(r"(?<=[.!?])\s+")
+
 
 def clamp(value: float, low: float = 0.0, high: float = 1.0) -> float:
     return max(low, min(high, value))
@@ -113,6 +130,56 @@ def answer_support_score(think: str, response: str, extra_info: Any) -> float:
     return clamp(len(answer_keywords & think_keywords) / required)
 
 
+def differential_coverage_score(think: str, response: str, extra_info: Any) -> float:
+    """Score whether the reasoning considers and eliminates distractor options."""
+    if not isinstance(extra_info, dict):
+        return 0.0
+    options = extra_info.get("options")
+    if not isinstance(options, dict):
+        return 0.0
+
+    final_answer = extract_answer_letter(response, loose=False)
+    distractors = [k for k in options if k != final_answer]
+    if not distractors:
+        return 0.0
+
+    think_lower = think.lower()
+    mentioned = sum(1 for k in distractors if k.lower() in think_lower or clean_text(options[k]).lower()[:20] in think_lower)
+    mention_score = clamp(mentioned / len(distractors))
+
+    has_exclusion = any(marker in think_lower for marker in EXCLUSION_MARKERS)
+    return clamp(0.6 * mention_score + 0.4 * float(has_exclusion))
+
+
+def medical_keyword_overlap_score(think: str, extra_info: Any) -> float:
+    """Score keyword overlap between reasoning and the question stem."""
+    if not isinstance(extra_info, dict):
+        return 0.0
+    question = clean_text(extra_info.get("question", ""))
+    if not question:
+        return 0.0
+    q_keywords = extract_keywords(question, min_len=4)
+    if not q_keywords:
+        return 0.0
+    t_keywords = extract_keywords(think, min_len=4)
+    overlap = len(q_keywords & t_keywords)
+    # reward grows quickly but caps at 1.0 around 4+ shared keywords
+    return clamp(overlap / max(4, len(q_keywords) * 0.4))
+
+
+def step_structure_score(think: str) -> float:
+    """Score whether reasoning has multiple distinct sentences (stepwise)."""
+    sentences = [s.strip() for s in SENTENCE_SPLIT_RE.split(think) if len(s.strip()) > 20]
+    count = len(sentences)
+    if count <= 1:
+        return 0.2
+    if count == 2:
+        return 0.5
+    if count == 3:
+        return 0.75
+    return 1.0
+
+
 def score_process(response: str, extra_info: Any = None) -> float:
     """Score whether the response contains useful, grounded reasoning.
 
@@ -141,7 +208,18 @@ def score_process(response: str, extra_info: Any = None) -> float:
     support_score = answer_support_score(think, text, extra_info)
     generic_penalty = sum(1 for phrase in GENERIC_PHRASES if phrase in think.lower())
 
-    score = 0.45 * length_score + 0.25 * marker_score + 0.30 * support_score
+    diff_score = differential_coverage_score(think, text, extra_info)
+    kw_score = medical_keyword_overlap_score(think, extra_info)
+    step_score = step_structure_score(think)
+
+    score = (
+        0.25 * length_score
+        + 0.15 * marker_score
+        + 0.20 * support_score
+        + 0.20 * diff_score
+        + 0.10 * kw_score
+        + 0.10 * step_score
+    )
     if generic_penalty:
         score -= min(0.35, 0.15 * generic_penalty)
     return clamp(score)
