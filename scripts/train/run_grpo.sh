@@ -18,6 +18,7 @@ PRM_MODEL_PATH="${PRM_MODEL_PATH:-}"
 OUTPUT_DIR="${OUTPUT_DIR:-${PROJECT_ROOT}/saves/qwen25-7b/grpo-lora/medqa-train-stride2-5k-ormv2}"
 PROJECT_NAME="${PROJECT_NAME:-clinical-prm-dapo}"
 EXPERIMENT_NAME="${EXPERIMENT_NAME:-qwen25_7b_grpo_lora_medqa_train_stride2_5k}"
+TRAINER_LOGGER="${TRAINER_LOGGER:-[\"console\",\"wandb\"]}"
 
 N_GPUS="${N_GPUS:-1}"
 ROLLOUT_TP="${ROLLOUT_TP:-${N_GPUS}}"
@@ -64,6 +65,8 @@ export HYDRA_FULL_ERROR="${HYDRA_FULL_ERROR:-1}"
 export REWARD_PROFILE
 export REWARD_CONFIG_PATH
 export PRM_MODEL_PATH
+export WANDB_PROJECT="${WANDB_PROJECT:-${PROJECT_NAME}}"
+export WANDB_NAME="${WANDB_NAME:-${EXPERIMENT_NAME}}"
 export VLLM_USE_V1="${VLLM_USE_V1:-0}"
 export VLLM_WORKER_MULTIPROC_METHOD="${VLLM_WORKER_MULTIPROC_METHOD:-spawn}"
 
@@ -128,4 +131,4 @@ python -m verl.trainer.main_ppo \
   trainer.test_freq="${TEST_FREQ}" \
   trainer.total_epochs="${TOTAL_EPOCHS}" \
   trainer.val_before_train="${VAL_BEFORE_TRAIN}" \
-  trainer.logger='["console"]'
+  trainer.logger="${TRAINER_LOGGER}"
